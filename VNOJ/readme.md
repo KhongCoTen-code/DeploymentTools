@@ -75,7 +75,7 @@ Bước này chỉ cần thực hiện trên Local Server
 git clone --recursive https://github.com/VNOI-Admin/vnoj-docker.git
 cd vnoj-docker/dmoj
 ```
-### Tải luyện code fix lỗi
+### Tải mã nguồn LCOJ Docker luyện code fix lỗi
 ```
 git clone --recursive https://github.com/luyencode/lcoj-docker.git
 cd lcoj-docker/dmoj
@@ -111,22 +111,22 @@ SECRET_KEY=abcdefghijklmnopqrstuvwxyz		#thay doi bang ma khoa tuy y
 Cấu hình hình tên server_name thành 192.168.1.60 hoặc domain name
 
 3. `dmoj/local_settings.py`
-Xóa file local_settings.py của LCOJ thành file local_settings.py của DMOJ
+Xóa file local_settings.py của LCOJ thay thành file local_settings.py của DMOJ
 
-cp, vm để copy và đổi tên
+* cp, vm để copy và đổi tên
 ```
 wget https://raw.githubusercontent.com/Ninjaclasher/dmoj-docker/refs/heads/master/local_settings.py
 ```
-Thay các chỗ sau  REGISTRATION_OPEN thành True
+* Thay các chỗ sau  REGISTRATION_OPEN thành True
 ```
 Bỏ comment chỗ email
-comment 2 dòng này
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = '<your account>@gmail.com'
 EMAIL_HOST_PASSWORD = '<your password>'
 EMAIL_PORT = 587
 
+comment 2 dòng này
 #DMOJ_PDF_PROBLEM_CACHE = '/pdfcache'
 
 #DMOJ_PDF_PROBLEM_INTERNAL = '/pdfcache'
@@ -138,8 +138,8 @@ Hầu hết các thông số đã được cấu hình sẵn. Nếu muốn thêm
 Ví dụ: Để người dùng tự đăng ký tài khoản, tiến hành thêm các thông tin cấu hình email để thực hiện xác thực đăng ký tài khoản qua email (cần tạo mật khẩu ứng dụng cho email)
 
 ### Sử dụng filezilla thay thế ảnh logo
-1. Thay đổi logo ảnh ở thư mục repo/resources/icons
-2. Comment nội dung chuyển khoản ở repo//templates/donate-button.html
+* 1. Thay đổi logo ảnh ở thư mục repo/resources/icons
+* 2. Comment nội dung chuyển khoản ở repo//templates/donate-button.html
 
 ### Build Docker Image
 Khởi tạo trước khi build
