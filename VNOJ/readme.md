@@ -101,7 +101,7 @@ MYSQL_ROOT_PASSWORD=greenhat1998		#thay doi password
 * site.env
 ```
 HOST=*				#thay bang IP cua Local Server
-SITE_FULL_URL=http://192.168.1.60/
+SITE_FULL_URL=http://192.168.1.60/     #thay bang IP cua Local Server
 MEDIA_URL=http://192.168.1.60/
 DEBUG=0
 SECRET_KEY=abcdefghijklmnopqrstuvwxyz		#thay doi bang ma khoa tuy y
@@ -138,8 +138,8 @@ Hầu hết các thông số đã được cấu hình sẵn. Nếu muốn thêm
 Ví dụ: Để người dùng tự đăng ký tài khoản, tiến hành thêm các thông tin cấu hình email để thực hiện xác thực đăng ký tài khoản qua email (cần tạo mật khẩu ứng dụng cho email)
 
 ### Sử dụng filezilla thay thế ảnh logo
-* 1. Thay đổi logo ảnh ở thư mục repo/resources/icons
-* 2. Comment nội dung chuyển khoản ở repo//templates/donate-button.html
+* Thay đổi logo ảnh ở thư mục repo/resources/icons
+* Comment nội dung chuyển khoản ở repo//templates/donate-button.html
 
 ### Build Docker Image
 Khởi tạo trước khi build
@@ -196,7 +196,7 @@ sudo make judge-tiervnoj
 ```
 Có thể thay thế `tiervnoj` bằng `tier1`, `tier2`, `tier3` (tier càng cao thì dung lượng càng lớn, càng được tích hợp nhiều ngôn ngữ hơn).
 
-### Tạo judge trên Local Server
+### Tạo judge trên Local Server chỗ file problems
 Tạo các file cấu hình tương ứng với mỗi judge có dạng là `judge_name.yml` (tên judge) và ghi những thông tin sau vào file:
 ```
 id: <judge name>
@@ -206,7 +206,20 @@ problem_storage_globs:
 ```
 Ở đây, ta sẽ chạy 2 máy chấm `judge01` và `judge02` trên Local Server
 
-Build Docker Image
+Build Docker Image bản LCOJ (Nếu máy chấm khác thì đổi tên chỗ VNOJ/judge-tier1
+```
+sudo docker run \
+    --name judge01 \
+    --network="host" \
+    -v /home/root1/lcoj-docker/dmoj/problems:/problems \
+    --cap-add=SYS_PTRACE \
+    -d \
+    --restart=always \
+    vnoj/judge-tier1:latest \
+    run -p 9999 -c /problems/judge01.yml 192.168.1.60 -A 0.0.0.0 -a 9111
+```
+
+Build Docker Image bản cũ
 ```
 sudo docker run \
     --name judge01 \
