@@ -75,6 +75,11 @@ Bước này chỉ cần thực hiện trên Local Server
 git clone --recursive https://github.com/VNOI-Admin/vnoj-docker.git
 cd vnoj-docker/dmoj
 ```
+### Tải luyện code fix lỗi
+```
+git clone --recursive https://github.com/luyencode/lcoj-docker.git
+cd lcoj-docker/dmoj
+```
 Kể từ lúc này, các câu lệnh đằng sau sẽ có thư mục hiện hành là `/dmoj`
 ### Cấu hình môi trường để sử dụng Docker
 Thay đổi các thông số cài đặt nhằm phù hợp với mục đích sử dụng và tăng tính bảo mật cho webserver.
@@ -95,7 +100,7 @@ MYSQL_ROOT_PASSWORD=greenhat1998		#thay doi password
 ```
 * site.env
 ```
-HOST=192.168.1.60				#thay bang IP cua Local Server
+HOST=*				#thay bang IP cua Local Server
 SITE_FULL_URL=http://192.168.1.60/
 MEDIA_URL=http://192.168.1.60/
 DEBUG=0
@@ -106,10 +111,35 @@ SECRET_KEY=abcdefghijklmnopqrstuvwxyz		#thay doi bang ma khoa tuy y
 Cấu hình hình tên server_name thành 192.168.1.60 hoặc domain name
 
 3. `dmoj/local_settings.py`
+Xóa file local_settings.py của LCOJ thành file local_settings.py của DMOJ
 
+cp, vm để copy và đổi tên
+```
+wget https://raw.githubusercontent.com/Ninjaclasher/dmoj-docker/refs/heads/master/local_settings.py
+```
+Thay các chỗ sau  REGISTRATION_OPEN thành True
+```
+Bỏ comment chỗ email
+comment 2 dòng này
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '<your account>@gmail.com'
+EMAIL_HOST_PASSWORD = '<your password>'
+EMAIL_PORT = 587
+
+#DMOJ_PDF_PROBLEM_CACHE = '/pdfcache'
+
+#DMOJ_PDF_PROBLEM_INTERNAL = '/pdfcache'
+
+REGISTRATION_OPEN = True
+```
 Hầu hết các thông số đã được cấu hình sẵn. Nếu muốn thêm tính năng nào thì bỏ dấu comment tính năng đó. 
 
 Ví dụ: Để người dùng tự đăng ký tài khoản, tiến hành thêm các thông tin cấu hình email để thực hiện xác thực đăng ký tài khoản qua email (cần tạo mật khẩu ứng dụng cho email)
+
+### Sử dụng filezilla thay thế ảnh logo
+1. Thay đổi logo ảnh ở thư mục repo/resources/icons
+2. Comment nội dung chuyển khoản ở repo//templates/donate-button.html
 
 ### Build Docker Image
 Khởi tạo trước khi build
@@ -141,7 +171,7 @@ sudo ./scripts/manage.py loaddata demo
 ### Sử dụng VNOJ Site
 Quá trình cài đặt đến đây đã hoàn tất. Chạy câu lệnh bên dưới để khởi động tất cả các docker container.
 ```
-sudo docker-compose up –d
+sudo docker-compose up -d
 ```
 Truy cập http://192.168.1.60 để kiểm tra kết quả (IP Local Server).
 
