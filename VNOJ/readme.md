@@ -158,6 +158,10 @@ Khởi tạo dữ liệu cho Database
 ```
 sudo ./scripts/migrate
 ```
+Nếu chay lênh trên lõi thì fix bằng cái này 
+```
+sudo docker compose exec site pip install lxml[html-clean]
+```
 Khởi tạo các file static
 ```
 sudo ./scripts/copy_static
