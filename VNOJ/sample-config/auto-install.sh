@@ -32,4 +32,5 @@ python3 manage.py loaddata navbar
 python3 manage.py loaddata language_small
 python3 manage.py loaddata demo
 python3 manage.py addjudge judge01 "abcdefghijklmnopqrstuvwxyz"
+python3 manage.py addjudge judge02 "abcdefghijklmnopqrstuvwxyz"
 pip3 install dmoj
