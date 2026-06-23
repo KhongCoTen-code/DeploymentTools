@@ -66,6 +66,60 @@ nohup ./manage.py runserver 0.0.0.0:8000 &      # Bat site
 ```
 Có thể thay thế cổng 8000 bằng các cổng khác nếu cần thiết.
 
+
+## Tạo máy chấm có nhiều thành phần chấm(cần cài docker)
+Cài docker vào 
+```
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+Install the Docker packages.
+```
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io 
+```
+
+✅ Tạo key thủ công và tạo thêm máy chấm
+
+Tạo key và chạy các lệnh máy chấm ở 
+(venv) root1@root1:~/site/problems$
+```
+. venv/bin/activate
+cd site/problems
+```
+
+```
+id: judge03
+key: 4hMMRT3AnsjE0F1qeLv5G91HWlAdfG1zojliuKFWBXGSSvbqAI1OskR19mIFvs38xgmJwsB2nAaQbNESgLS5/BWdgDoxIn9Y3Vup
+problem_storage_globs:
+  - /problems/*
+```
+
+✅ Lỗi thì dùng lệnh này xóa (k lỗi thì giữ nguyên)
+```
+sudo docker rm -f judge05
+
+sudo docker run \
+  --name judge03 \
+  --network="host" \
+  -v /home/root1/site/problems:/problems \
+  --cap-add=SYS_PTRACE \
+  -d \
+  --restart=always \
+  vnoj/judge-tier1:latest \
+  run -p 9999 -c /problems/judge03.yml 127.0.0.1
+
+```
+
+Có thể thay thế cổng 8000 bằng các cổng khác nếu cần thiết.
 Kiểm tra ở mục **STATUS** trên website để xem trạng thái kết nối của Judge đến Site. Sau đó thử nộp bài với các máy chấm khác nhau để kiểm tra kết quả.
 
 Chúc các bạn thành công. 
