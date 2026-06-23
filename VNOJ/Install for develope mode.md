@@ -96,6 +96,7 @@ Tạo key và chạy các lệnh máy chấm ở
 cd site/problems
 ```
 
+dùng lệnh nano judge03.yml để tạo
 ```
 id: judge03
 key: 4hMMRT3AnsjE0F1qeLv5G91HWlAdfG1zojliuKFWBXGSSvbqAI1OskR19mIFvs38xgmJwsB2nAaQbNESgLS5/BWdgDoxIn9Y3Vup
@@ -106,7 +107,10 @@ problem_storage_globs:
 ✅ Lỗi thì dùng lệnh này xóa (k lỗi thì giữ nguyên)
 ```
 sudo docker rm -f judge05
+```
 
+Khởi động máy chấm
+```
 sudo docker run \
   --name judge03 \
   --network="host" \
